@@ -1,2 +1,2 @@
-# zotero-read-tracker
+# ZoteroReadTracker
 A Zotero plugin to track your reading activity and visualize it with a GitHub-style heatmap calendar
