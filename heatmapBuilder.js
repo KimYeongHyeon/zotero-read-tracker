@@ -176,6 +176,9 @@ var ZoteroReadTrackerHeatmap = {
     buildFullSVGString: function(counts, theme, streak) {
         var th = theme || "dark";
         var t = this._themes[th];
+        var titleColor = t.title;
+        var textColor = t.text;
+        var bg = t.bg;
         var data = this.buildSVG(counts, th);
         var COLORS = this._getColors(th);
 
@@ -193,7 +196,7 @@ var ZoteroReadTrackerHeatmap = {
         }
 
         var fullW = data.width + 20;
-        var fullH = data.height + 120;
+        var fullH = data.height + 160;
 
         var out = '';
         out += '<svg xmlns="http://www.w3.org/2000/svg"';
@@ -202,30 +205,47 @@ var ZoteroReadTrackerHeatmap = {
         out += '<rect width="100%" height="100%"';
         out += ' fill="' + t.bg + '" rx="6"/>';
 
-        out += '<text x="' + (fullW / 2) + '" y="30"';
-        out += ' text-anchor="middle"';
-        out += ' fill="' + t.title + '"';
-        out += ' font-size="16" font-weight="600"';
-        out += ' font-family="-apple-system,sans-serif">';
-        out += '\uD83D\uDCDA Reading Heatmap</text>';
+        out += '<text x="' + (fullW / 2) + '" y="28"'
+            + ' text-anchor="middle" fill="' + titleColor + '"'
+            + ' font-size="16" font-weight="600"'
+            + ' font-family="-apple-system,sans-serif">'
+            + '\uD83D\uDCDA Reading Heatmap</text>';
+        out += '<text x="' + (fullW / 2) + '" y="46"'
+            + ' text-anchor="middle" fill="' + textColor + '"'
+            + ' font-size="12"'
+            + ' font-family="-apple-system,sans-serif">'
+            + 'Your paper reading activity over the past year</text>';
 
         var statsY = 52;
-        var statsText = totalPapers
-            + " papers \u00B7 "
-            + activeDays + " days \u00B7 \uD83D\uDD25 "
-            + streak + " day streak";
-        out += '<text x="' + (fullW / 2) + '"';
-        out += ' y="' + statsY + '"';
-        out += ' text-anchor="middle"';
-        out += ' fill="' + t.text + '"';
-        out += ' font-size="12"';
-        out += ' font-family="-apple-system,sans-serif">';
-        out += statsText + '</text>';
+        var statWidth = 90;
+        var statsStartX = (fullW - 4 * statWidth) / 2;
+        var statsY = 75;
+        var numColor = bg === "#0d1117" ? "#58a6ff" : "#0969da";
+        var fireColor = bg === "#0d1117" ? "#f0883e" : "#cf222e";
+        var stats = [
+            { value: totalPapers, label: "Papers read", color: numColor },
+            { value: activeDays, label: "Active days", color: numColor },
+            { value: maxInDay, label: "Best day", color: numColor },
+            { value: "\uD83D\uDD25 " + streak, label: "Day streak", color: fireColor }
+        ];
+        for (var si = 0; si < stats.length; si++) {
+            var sx = statsStartX + si * statWidth + statWidth / 2;
+            out += '<text x="' + sx + '" y="' + statsY + '"'
+                + ' text-anchor="middle" fill="' + stats[si].color + '"'
+                + ' font-size="22" font-weight="700"'
+                + ' font-family="-apple-system,sans-serif">'
+                + stats[si].value + '</text>';
+            out += '<text x="' + sx + '" y="' + (statsY + 16) + '"'
+                + ' text-anchor="middle" fill="' + textColor + '"'
+                + ' font-size="11"'
+                + ' font-family="-apple-system,sans-serif">'
+                + stats[si].label + '</text>';
+        }
 
-        out += '<g transform="translate(10, 65)">';
+        out += '<g transform="translate(10, 105)">';
         out += data.svg + '</g>';
 
-        var legY = data.height + 80;
+        var legY = data.height + 120;
         var legStartX = fullW / 2 - 60;
         out += '<text x="' + (legStartX - 4) + '"';
         out += ' y="' + (legY + 10) + '"';

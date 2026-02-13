@@ -8,7 +8,7 @@
     "zotero": {
       "id": "zotero-read-tracker@github.com",
       "update_url": "https://github.com/marysethomas/ZoteroReadTracker",
-      "strict_min_version": "6.999",
+      "strict_min_version": "7.0",
       "strict_max_version": "7.0.*"
     }
   }

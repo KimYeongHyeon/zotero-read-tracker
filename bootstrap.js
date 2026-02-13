@@ -12,12 +12,8 @@ function install() {
 async function startup({ id, version, rootURI }) {
     log("Starting");
 
-    Services.scriptloader.loadSubScript(
-        rootURI + "heatmapBuilder.js"
-    );
-    Services.scriptloader.loadSubScript(
-        rootURI + "readTracker.js"
-    );
+    Services.scriptloader.loadSubScript(rootURI + "readTracker.js");
+    Services.scriptloader.loadSubScript(rootURI + "heatmapBuilder.js");
 
     ZoteroReadTracker.init({ id, version, rootURI });
 
