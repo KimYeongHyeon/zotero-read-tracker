@@ -17,10 +17,10 @@ A Zotero plugin to track your reading activity and visualize it with a GitHub-st
 ## Screenshots
 
 ### Dark Mode
-![Dark Mode Heatmap](assets/example-heatmap-darkmode.png)
+![Dark Mode Heatmap](assets/example-heatmap-darkmode.html)
 
 ### Light Mode
-![Light Mode Heatmap](assets/example-heatmap-lightmode.png)
+![Light Mode Heatmap](assets/example-heatmap-lightmode.html)
 
 ---
 
@@ -47,6 +47,11 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
 
 3. Follow steps 2-6 above
 
+### Compatibility
+
+- **Zotero 7.0+**
+- Not tested on any other version
+
 ---
 
 ## Usage
@@ -55,7 +60,7 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
 
 1. Right-click on any item in your library
 2. Select **"Toggle Read Status"**
-3. The item will be marked as read with a checkmark in the **Read Status** column (or unmarked if already read). The read status, date, and time will be stored in the **Extra** field of the item's **Info**
+3. The item will be marked with a checkmark in the **Read Status** column (or unmarked if already read)
 4. Highlight multiple items to toggle read status simultaneously
 5. Make **Read Status** column visible by right-clicking on the column headers and selecting **Read Status**
 
@@ -72,7 +77,7 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
    - 🖼 **Save PNG** — Download as PNG
    - 📤 **Save Shareable HTML** — Download as HTML file
 
-### Data Storage
+### View and Edit Read Details
 
 Read status is stored in each item's **Extra** field using the following format:
 
@@ -87,8 +92,6 @@ If the item's read status is toggled off, the read status will be updated to the
 ```bash
 Read: false
 ```
-
-### Edit Read Details
 
 The read date and time can be manually edited if needed:
 
@@ -105,11 +108,6 @@ To preview the heatmap with example data:
 2. Go to `Tools` → `Developer` → `Run JavaScript`
 3. Copy and paste the contents of `plotExampleHeatmap.js` into the Code box
 4. Click **Run**
-
-### Compatibility
-
-- **Zotero 7.0+**
-- Not tested on any other version
 
 ---
 
