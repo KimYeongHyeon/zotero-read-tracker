@@ -173,3 +173,6 @@ vite.config.ts.timestamp-*
 ehthumbs.db
 Thumbs.db
 .DS_Store
+
+# Other
+.idea
