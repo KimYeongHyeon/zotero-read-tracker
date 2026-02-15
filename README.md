@@ -9,7 +9,7 @@ A Zotero plugin to track your reading activity and visualize it with a GitHub-st
 ### Also see these projects for tracking reading activity
 - [zotero-reading-list](https://github.com/Dominic-DallOsto/zotero-reading-list) - Track reading status with labels such as To Read, In Progress, or Read
 - [zotero-paper-tracker](https://github.com/pranavponnusamy/zotero-paper-tracker) - A web app that marks read papers with strikethrough
-- [zotero-action-tags](https://github.com/windingwind/zotero-actions-tags) - Tag papers as read/unread and customize actions to be triggered
+- [zotero-actions-tags](https://github.com/windingwind/zotero-actions-tags) - Tag papers as read/unread and customize actions to be triggered
 - [zotero-style](https://github.com/MuiseDestiny/zotero-style) - Unread papers are shown in bold until marked as read
 
 ---
