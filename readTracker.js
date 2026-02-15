@@ -62,16 +62,21 @@ var ZoteroReadTracker = {
                 .split("\n")
                 .filter(function(line) {
                     return !line.match(/^Read:/i)
-                        && !line.match(/^Read-Date:/i);
+                        && !line.match(/^Read-Date:/i)
+                        && !line.match(/^Read-Time:/i);
                 })
                 .join("\n")
                 .trim();
 
             if (newStatus) {
-                var today = new Date().toISOString()
+                var now = new Date();
+                var today = now.toISOString()
                     .split("T")[0];
+                var time = now.toTimeString()
+                    .split(" ")[0];
                 extra += "\nRead: true\nRead-Date: "
-                    + today;
+                    + today
+                    + "\nRead-Time: " + time;
             } else {
                 extra += "\nRead: false";
             }

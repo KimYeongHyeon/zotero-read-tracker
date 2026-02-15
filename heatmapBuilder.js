@@ -216,7 +216,6 @@ var ZoteroReadTrackerHeatmap = {
             + ' font-family="-apple-system,sans-serif">'
             + 'Your paper reading activity over the past year</text>';
 
-        var statsY = 52;
         var statWidth = 90;
         var statsStartX = (fullW - 4 * statWidth) / 2;
         var statsY = 75;
