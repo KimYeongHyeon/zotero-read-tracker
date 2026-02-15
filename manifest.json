@@ -1,15 +1,13 @@
 {
   "manifest_version": 2,
   "name": "Zotero Read Tracker",
-  "version": "7.0.0",
+  "version": "0.1.0",
   "description": "Keep track of which papers you've read in Zotero",
-  "homepage_url": "https://github.com/marysethomas/ZoteroReadTracker",
+  "homepage_url": "https://github.com/marysethomas/zotero-read-tracker",
   "applications": {
     "zotero": {
       "id": "zotero-read-tracker@github.com",
-      "update_url": "https://github.com/marysethomas/zotero-read-tracker/releases/",
-      "strict_min_version": "7.0",
-      "strict_max_version": "7.0.*"
+      "update_url": "https://github.com/marysethomas/zotero-read-tracker/releases"
     }
   }
 }
