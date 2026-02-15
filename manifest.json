@@ -7,7 +7,7 @@
   "applications": {
     "zotero": {
       "id": "zotero-read-tracker@github.com",
-      "update_url": "https://github.com/marysethomas/ZoteroReadTracker",
+      "update_url": "https://github.com/marysethomas/zotero-read-tracker/releases/",
       "strict_min_version": "7.0",
       "strict_max_version": "7.0.*"
     }

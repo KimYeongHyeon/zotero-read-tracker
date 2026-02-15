@@ -17,10 +17,10 @@ A Zotero plugin to track your reading activity and visualize it with a GitHub-st
 ## Screenshots
 
 ### Dark Mode
-![Dark Mode Heatmap](assets/example-heatmap-darkmode.html)
+![Dark Mode Heatmap](assets/example-heatmap-darkmode.png)
 
 ### Light Mode
-![Light Mode Heatmap](assets/example-heatmap-lightmode.html)
+![Light Mode Heatmap](assets/example-heatmap-lightmode.png)
 
 ---
 
@@ -50,7 +50,6 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
 ### Compatibility
 
 - **Zotero 7.0+**
-- Not tested on any other version
 
 ---
 
