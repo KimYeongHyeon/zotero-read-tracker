@@ -72,18 +72,7 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
    - 🖼 **Save PNG** — Download as PNG
    - 📤 **Save Shareable HTML** — Download as HTML file
 
-### Edit Read Details
-
-The read date and time can be manually edited if needed:
-
-1. Select the item in your library
-2. Open the **Info** panel (right sidebar)
-3. Find the **Extra** field
-4. Edit the `Read-Date: YYYY-MM-DD` or `Read-Time: HH:MM:DD` line
-
----
-
-## Data Storage
+### Data Storage
 
 Read status is stored in each item's **Extra** field using the following format:
 
@@ -95,11 +84,20 @@ Read-Time: HH:MM:SS
 
 If the item's read status is toggled off, the read status will be updated to the following:
 
+```bash
 Read: false
+```
 
----
+### Edit Read Details
 
-## Generate example plots
+The read date and time can be manually edited if needed:
+
+1. Select the item in your library
+2. Open the **Info** panel (right sidebar)
+3. Find the **Extra** field
+4. Edit the `Read-Date: YYYY-MM-DD` or `Read-Time: HH:MM:DD` line
+
+### Generate example plots
 
 To preview the heatmap with example data:
 
@@ -108,9 +106,7 @@ To preview the heatmap with example data:
 3. Copy and paste the contents of `plotExampleHeatmap.js` into the Code box
 4. Click **Run**
 
----
-
-## Compatibility
+### Compatibility
 
 - **Zotero 7.0+**
 - Not tested on any other version
