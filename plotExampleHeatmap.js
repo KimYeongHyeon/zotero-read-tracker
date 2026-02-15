@@ -1,9 +1,9 @@
 /*
  * ══════════════════════════════════════════════════════════════════════════════
- * READING HEATMAP SAMPLE GENERATOR
+ * READING HEATMAP EXAMPLE GENERATOR
  * ══════════════════════════════════════════════════════════════════════════════
  *
- * This script generates a sample reading heatmap with randomly generated data.
+ * This script plots an example reading heatmap with randomly generated data.
  *
  * HOW TO USE:
  * ───────────

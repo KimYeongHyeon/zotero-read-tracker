@@ -89,7 +89,7 @@ To preview the heatmap without setting up real reading data:
 
 1. Open Zotero
 2. Go to `Tools` → `Developer` → `Run JavaScript`
-3. Copy and paste the contents of `generateSampleHeatmap.js`
+3. Copy and paste the contents of `plotExampleHeatmap.js`
 4. Click **Run** or press `Ctrl+R` (`Cmd+R` on Mac)
 5. Select a browser when prompted to view the heatmap
 
