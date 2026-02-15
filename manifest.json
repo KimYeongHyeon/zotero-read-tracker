@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Zotero Read Tracker",
-  "version": "0.1.0",
+  "version": "7.0.0",
   "description": "Keep track of which papers you've read in Zotero",
   "homepage_url": "https://github.com/marysethomas/ZoteroReadTracker",
   "applications": {
