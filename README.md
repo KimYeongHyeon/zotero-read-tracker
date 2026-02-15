@@ -2,6 +2,7 @@
 A Zotero plugin to track your reading activity and visualize it with a GitHub-style heatmap calendar
 
 ![Zotero](https://img.shields.io/badge/Zotero-7.0+-CC2936?logo=zotero&logoColor=white)
+![Zotero](https://img.shields.io/badge/Zotero-8.0+-CC2936?logo=zotero&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 
 ---
@@ -49,7 +50,9 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
 
 ### Compatibility
 
+Tested in:
 - **Zotero 7.0+**
+- **Zotero 8.0+**
 
 ---
 
