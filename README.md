@@ -46,7 +46,7 @@ zip -r ../ZoteroReadTracker.xpi manifest.json bootstrap.js readTracker.js heatma
 
 ### Compatibility
 
-Tested in **Zotero 7.0+** and **Zotero 8.0+**
+Tested in **Zotero 7.0+**, **Zotero 8.0+**, and **Zotero 9.0+**
 
 ---
 
