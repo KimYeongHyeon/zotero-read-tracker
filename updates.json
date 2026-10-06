@@ -3,9 +3,9 @@
     "research-activity@kimyeonghyeon": {
       "updates": [
         {
-          "version": "0.2.1",
-          "update_link": "https://github.com/KimYeongHyeon/zotero-read-tracker/releases/download/v0.2.1/ZoteroResearchActivity.xpi",
-          "update_hash": "sha256:263aa79c6588312f674924fb162010c8c67a03fd44766317aad39272bbd7d14b",
+          "version": "0.2.2",
+          "update_link": "https://github.com/KimYeongHyeon/zotero-read-tracker/releases/download/v0.2.2/ZoteroResearchActivity.xpi",
+          "update_hash": "sha256:a8239c4c70ab7c67ec912e31a092bd216c0da251220280da5cd6cc2ad8d91b6a",
           "applications": {
             "zotero": {
               "strict_min_version": "10.0.5",

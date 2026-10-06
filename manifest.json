@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Zotero Research Activity",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Your research activity: reading, notes, saved papers, and a yearly activity calendar",
   "homepage_url": "https://github.com/KimYeongHyeon/zotero-read-tracker",
   "applications": {

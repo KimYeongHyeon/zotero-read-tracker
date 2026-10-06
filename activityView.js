@@ -6,7 +6,7 @@
     var snapshot;
     var handlers = {};
     var state = { year: null, collection: "all", type: "all", month: null, date: null };
-    var viewMemory = { scrollTop: 0, open: {} };
+    var viewMemory = { scrollTop: 0, open: {}, collectionPickerOpen: false, collectionBranches: {} };
     var labels = { all: "All", read: "Reading", note: "Notes", save: "Saved" };
     var colors = { read: "#2da44e", note: "#8250df", save: "#0969da" };
     var icons = { read: "▤", note: "✎", save: "＋" };
@@ -77,6 +77,12 @@
         Array.prototype.forEach.call(root.querySelectorAll("details[data-type]"), function (details) {
             viewMemory.open[details.getAttribute("data-type")] = details.open;
         });
+        var picker = root.querySelector("details[data-collection-picker]");
+        if (picker && !viewMemory.forceCollectionPickerClosed) viewMemory.collectionPickerOpen = picker.open;
+        viewMemory.collectionBranches = {};
+        Array.prototype.forEach.call(root.querySelectorAll("details[data-collection-branch]"), function (details) {
+            viewMemory.collectionBranches[details.getAttribute("data-collection-branch")] = details.open;
+        });
     }
     function set(next, save) {
         rememberView();
@@ -109,6 +115,30 @@
             });
         }
         return wanted;
+    }
+    function collectionTree() {
+        var byKey = {}, roots = [], children = {};
+        collections().forEach(function (collection) { byKey[collection.key] = collection; children[collection.key] = []; });
+        Object.keys(byKey).forEach(function (key) {
+            var collection = byKey[key], parent = byKey[collection.parentKey], cursor = collection.parentKey, seen = {};
+            while (cursor && byKey[cursor] && !seen[cursor]) { seen[cursor] = true; cursor = byKey[cursor].parentKey; }
+            if (parent && !seen[key]) children[collection.parentKey].push(collection);
+            else roots.push(collection);
+        });
+        function sort(items) { return items.sort(function (a, b) { return String(a.name || a.key).localeCompare(String(b.name || b.key)); }); }
+        Object.keys(children).forEach(function (key) { sort(children[key]); });
+        return { roots: sort(roots), children: children, byKey: byKey };
+    }
+    function collectionPath(key) {
+        if (key === "all") return "All collections";
+        var tree = collectionTree(), path = [], seen = {}, current = tree.byKey[key];
+        while (current && !seen[current.key]) { path.unshift(current.name || current.key); seen[current.key] = true; current = tree.byKey[current.parentKey]; }
+        return path.length ? path.join(" / ") : "All collections";
+    }
+    function collectionAncestors(key) {
+        var tree = collectionTree(), result = {}, seen = {}, current = tree.byKey[key];
+        while (current && !seen[current.key]) { result[current.key] = true; seen[current.key] = true; current = tree.byKey[current.parentKey]; }
+        return result;
     }
     function itemMap() {
         var map = {};
@@ -246,10 +276,7 @@
     }
     function buildOverview(panel) {
         var overview = node("section", { class: "ra-overview" });
-        var chips = node("div", { class: "ra-collections", "aria-label": "Collections" });
-        appendButton(chips, "All collections", { class: "ra-chip", "aria-pressed": state.collection === "all" }, function () { set({ collection: "all", date: null }); });
-        collections().forEach(function (collection) { appendButton(chips, collection.name || collection.key, { class: "ra-chip", "aria-pressed": state.collection === collection.key }, function () { set({ collection: collection.key, date: null }); }); });
-        overview.appendChild(chips);
+        overview.appendChild(buildCollectionPicker());
         var summary = node("div", { class: "ra-summary" });
         var left = node("div", { class: "ra-summary-left" });
         left.appendChild(node("h3", {}, "Activity overview"));
@@ -274,6 +301,36 @@
         summary.appendChild(ratio);
         overview.appendChild(summary);
         panel.appendChild(overview);
+    }
+    function chooseCollection(key) {
+        viewMemory.collectionPickerOpen = false;
+        viewMemory.forceCollectionPickerClosed = true;
+        set({ collection: key, date: null });
+        viewMemory.forceCollectionPickerClosed = false;
+    }
+    function buildCollectionPicker() {
+        var picker = node("details", { class: "ra-collection-picker", open: viewMemory.collectionPickerOpen, "data-collection-picker": "true" });
+        picker.appendChild(node("summary", {}, "Collection: " + collectionPath(state.collection)));
+        var choices = node("div", { class: "ra-collection-choices", "aria-label": "Collection picker" });
+        appendButton(choices, "All collections", { class: "ra-collection-select", "aria-pressed": state.collection === "all" }, function () { chooseCollection("all"); });
+        var tree = collectionTree(), ancestors = collectionAncestors(state.collection);
+        function appendBranch(container, collection) {
+            var childItems = tree.children[collection.key] || [];
+            if (!childItems.length) {
+                appendButton(container, collection.name || collection.key, { class: "ra-collection-select", "aria-pressed": state.collection === collection.key }, function () { chooseCollection(collection.key); });
+                return;
+            }
+            var open = ancestors[collection.key] || viewMemory.collectionBranches[collection.key];
+            var details = node("details", { class: "ra-collection-branch", open: !!open, "data-collection-branch": collection.key });
+            details.appendChild(node("summary", {}, collection.name || collection.key));
+            var content = node("div", { class: "ra-collection-branch-content" });
+            appendButton(content, "Select " + (collection.name || collection.key), { class: "ra-collection-select", "aria-pressed": state.collection === collection.key }, function () { chooseCollection(collection.key); });
+            childItems.forEach(function (child) { appendBranch(content, child); });
+            details.appendChild(content); container.appendChild(details);
+        }
+        tree.roots.forEach(function (collection) { appendBranch(choices, collection); });
+        picker.appendChild(choices);
+        return picker;
     }
     function buildTriangle(counts) {
         var ratios = ratioCounts(counts);
@@ -411,8 +468,12 @@
         var days = [];
         var cursor;
         var paperTitles = ["A Practical Guide to Generative Models", "Reliable Evaluation for Clinical AI", "Representation Learning in Medical Imaging", "Efficient Methods for Scientific Machine Learning", "Interpretable Models for Biomedical Data", "Foundations of Probabilistic Deep Learning", "Robust Validation for Machine Learning Systems", "Multimodal Learning for Health Research", "A Survey of Agentic AI Systems", "Statistical Perspectives on Model Calibration"];
-        var collectionKeys = ["models", "medical", "methods"];
-        var collectionsDemo = [{ key: "models", name: "Generative Models" }, { key: "medical", name: "Medical AI" }, { key: "methods", name: "Research Methods" }];
+        var collectionKeys = ["diffusion", "flow", "imaging", "agents", "evaluation"];
+        var collectionsDemo = [
+            { key: "models", name: "Generative Models" }, { key: "diffusion", name: "Diffusion", parentKey: "models" }, { key: "flow", name: "Flow Models", parentKey: "models" },
+            { key: "medical", name: "Medical AI" }, { key: "imaging", name: "Imaging", parentKey: "medical" }, { key: "agents", name: "Clinical Agents", parentKey: "medical" },
+            { key: "methods", name: "Research Methods" }, { key: "evaluation", name: "Evaluation", parentKey: "methods" }
+        ];
         var itemsDemo = [], recordsDemo = [], readingDemo = [];
         for (cursor = new Date(first); localISO(cursor) <= todayValue; cursor.setDate(cursor.getDate() + 1)) days.push(localISO(cursor));
         for (var itemIndex = 0; itemIndex < 50; itemIndex++) {

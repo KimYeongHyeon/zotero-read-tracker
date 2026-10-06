@@ -6,6 +6,10 @@ The **0.2.0 core activity functionality** was validated on 2026-10-06 with Zoter
 
 The **0.2.1 English interface** was visually checked in the desktop browser with explicitly labeled synthetic demo data. Headings, filters, months, help text, and the activity timeline are in English. The model and view checks passed after the string changes. The screenshots in this repository contain demo data only.
 
+The 0.2.1 English release was also installed and opened in the actual Zotero profile. The installed XPI, downloaded GitHub release, and packaged output were byte-identical. Personal library screenshots were not published.
+
+The **0.2.2 collection picker** was checked in the desktop demo: it starts collapsed, expands parent collections, shows the selected full path, and collapses after selection. Selecting the demo child showed 30 activities; selecting its parent included both children and showed 60. Public assets were audited against the GitHub tree and contain synthetic data only.
+
 ## Results
 
 | Check | Result | Observed evidence |
@@ -53,6 +57,5 @@ python3 scripts/package.py dist/ZoteroResearchActivity.xpi
 - Performance with large libraries.
 - Real OS sleep or a real midnight crossover.
 - Sub-second foreground-window changes; collection observes active state about once per second.
-- End-user library installation and GitHub release publication.
 
 An abnormal forced exit can lose reading time since the last periodic save.

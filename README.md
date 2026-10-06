@@ -1,4 +1,4 @@
-# Zotero Research Activity · v0.2.1
+# Zotero Research Activity · v0.2.2
 
 **A private, GitHub-style activity page for your Zotero library.**
 
@@ -6,7 +6,7 @@ Zotero Research Activity brings reading, notes, annotations, saved papers, and c
 
 ![Research Activity overview](assets/research-activity-overview.png)
 
-The screenshots use synthetic demo data. This plugin does not upload your library or activity records.
+The screenshots use synthetic demo data, including fictional collections and paper titles. This plugin does not upload your library or activity records.
 
 ## Install
 
@@ -21,12 +21,18 @@ The activity page opens inside Zotero. Reopening it selects the existing tab.
 ## What it shows
 
 - A year-long activity calendar with **All**, **Reading**, **Notes**, and **Saved** filters.
-- Year and collection filters. A collection includes its current child collections; an item in more than one matching collection is counted once.
+- Year filters and a collapsed, hierarchical collection picker. Expand parent collections to select a nested collection. A collection includes its current child collections; an item in more than one matching collection is counted once.
 - Reading, note, and saved-paper totals, measured reading time, completed-paper count, and a triangular activity-ratio view.
 - A date and month activity timeline. Select a paper to reveal it in the library, open a PDF, or jump to an annotation.
 - A persistent view state, so the selected year, collection, activity filter, and month return after restart.
 
 ![Research Activity details](assets/research-activity-details.png)
+
+## Collection navigation
+
+The picker starts collapsed. Expand a parent to browse its children, or choose **Select parent name** to include the whole branch. Choosing a collection closes the picker and shows its full path.
+
+![Hierarchical collection picker with demo data](assets/research-activity-collections.png)
 
 ## How activity is counted
 
