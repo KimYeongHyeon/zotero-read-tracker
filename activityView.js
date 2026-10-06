@@ -310,26 +310,45 @@
     }
     function buildCollectionPicker() {
         var picker = node("details", { class: "ra-collection-picker", open: viewMemory.collectionPickerOpen, "data-collection-picker": "true" });
-        picker.appendChild(node("summary", {}, "Collection: " + collectionPath(state.collection)));
+        var trigger = node("summary", { class: "ra-collection-trigger", "aria-label": "Choose collection" });
+        trigger.appendChild(node("span", { class: "ra-collection-caption" }, "Collection"));
+        trigger.appendChild(node("span", { class: "ra-collection-value", title: collectionPath(state.collection) }, collectionPath(state.collection)));
+        picker.appendChild(trigger);
+        var menu = node("div", { class: "ra-collection-menu" });
+        var heading = node("div", { class: "ra-collection-menu-heading" });
+        heading.appendChild(node("strong", {}, "Choose a collection"));
+        heading.appendChild(node("span", {}, "Parent collections include their children"));
+        menu.appendChild(heading);
         var choices = node("div", { class: "ra-collection-choices", "aria-label": "Collection picker" });
-        appendButton(choices, "All collections", { class: "ra-collection-select", "aria-pressed": state.collection === "all" }, function () { chooseCollection("all"); });
+        function selectButton(container, collection) {
+            appendButton(container, collection.name, { class: "ra-collection-select", "aria-pressed": state.collection === collection.key }, function (event) {
+                event.preventDefault(); event.stopPropagation(); chooseCollection(collection.key);
+                root.querySelector(".ra-collection-trigger").focus();
+            });
+        }
+        selectButton(choices, { key: "all", name: "All collections" });
         var tree = collectionTree(), ancestors = collectionAncestors(state.collection);
         function appendBranch(container, collection) {
             var childItems = tree.children[collection.key] || [];
             if (!childItems.length) {
-                appendButton(container, collection.name || collection.key, { class: "ra-collection-select", "aria-pressed": state.collection === collection.key }, function () { chooseCollection(collection.key); });
-                return;
+                var leaf = node("div", { class: "ra-collection-leaf" });
+                selectButton(leaf, { key: collection.key, name: collection.name || collection.key });
+                container.appendChild(leaf); return;
             }
             var open = ancestors[collection.key] || viewMemory.collectionBranches[collection.key];
             var details = node("details", { class: "ra-collection-branch", open: !!open, "data-collection-branch": collection.key });
-            details.appendChild(node("summary", {}, collection.name || collection.key));
+            var row = node("summary", { "aria-label": "Expand " + (collection.name || collection.key) });
+            selectButton(row, { key: collection.key, name: collection.name || collection.key });
+            details.appendChild(row);
             var content = node("div", { class: "ra-collection-branch-content" });
-            appendButton(content, "Select " + (collection.name || collection.key), { class: "ra-collection-select", "aria-pressed": state.collection === collection.key }, function () { chooseCollection(collection.key); });
             childItems.forEach(function (child) { appendBranch(content, child); });
             details.appendChild(content); container.appendChild(details);
         }
         tree.roots.forEach(function (collection) { appendBranch(choices, collection); });
-        picker.appendChild(choices);
+        menu.appendChild(choices); picker.appendChild(menu);
+        picker.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") { picker.open = false; trigger.focus(); event.stopPropagation(); }
+        });
         return picker;
     }
     function buildTriangle(counts) {
@@ -419,6 +438,10 @@
         layout.appendChild(main);
         var yearBox = node("aside", { class: "ra-years", "aria-label": "Year selection" }); buildYears(yearBox); layout.appendChild(yearBox);
         page.appendChild(layout); root.appendChild(page); ensureOverlay();
+        page.addEventListener("click", function (event) {
+            var picker = page.querySelector(".ra-collection-picker");
+            if (picker && !picker.contains(event.target)) picker.open = false;
+        });
         if (document.scrollingElement) document.scrollingElement.scrollTop = viewMemory.scrollTop;
     }
     function formatTime(seconds) { var minutes = Math.round(number(seconds) / 60); return minutes >= 60 ? Math.floor(minutes / 60) + "h " + (minutes % 60) + "m" : minutes + "m"; }

@@ -1,4 +1,4 @@
-# Zotero Research Activity · v0.2.2
+# Zotero Research Activity · v0.2.3
 
 **A private, GitHub-style activity page for your Zotero library.**
 
@@ -30,7 +30,7 @@ The activity page opens inside Zotero. Reopening it selects the existing tab.
 
 ## Collection navigation
 
-The picker starts collapsed. Expand a parent to browse its children, or choose **Select parent name** to include the whole branch. Choosing a collection closes the picker and shows its full path.
+The picker starts collapsed. Use the arrow to expand a parent, or click its name to select the whole branch. Choosing a collection closes the menu and shows its full path. The menu has consistent rows, a selected checkmark, a bounded scroll area, and keyboard support.
 
 ![Hierarchical collection picker with demo data](assets/research-activity-collections.png)
 

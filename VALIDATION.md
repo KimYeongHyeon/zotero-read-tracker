@@ -10,6 +10,8 @@ The 0.2.1 English release was also installed and opened in the actual Zotero pro
 
 The **0.2.2 collection picker** was checked in the desktop demo: it starts collapsed, expands parent collections, shows the selected full path, and collapses after selection. Selecting the demo child showed 30 activities; selecting its parent included both children and showed 60. Public assets were audited against the GitHub tree and contain synthetic data only.
 
+The **0.2.3 design and update fix** was inspected in the actual Zotero 10.0.5 window after upgrading from 0.2.2. The compact trigger, styled menu rows, selected state, and bounded dropdown rendered correctly. Desktop browser interactions confirmed child and parent filtering, automatic closing, and Escape.
+
 ## Results
 
 | Check | Result | Observed evidence |
@@ -32,6 +34,8 @@ The **0.2.2 collection picker** was checked in the desktop demo: it starts colla
 | Midnight, sleep, and DST | PASS (unit checks) | Local-midnight splitting, DST elapsed time, and exclusion of timer gaps over 10 seconds were checked. Actual OS sleep was not executed. |
 
 ## Corrections made during validation
+
+- The 0.2.2 hierarchy appeared without its new stylesheet in the actual app after a hot update. Browser screenshots and an accessibility-tree check had missed this rendering failure. Versioned document URLs and content-hashed CSS/JS URLs in the packaged HTML now invalidate those caches; the 0.2.3 installed app was checked visually after upgrade.
 
 - Attached the initial internal-frame load handler in the capture phase so page buttons could reach Zotero; navigation and persisted selection were rechecked.
 - Corrected boolean handling for month options and `details`, plus ratio rounding that previously gave every empty category 1%.

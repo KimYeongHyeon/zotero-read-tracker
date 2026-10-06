@@ -24,7 +24,7 @@ async function startup({ id, version, rootURI }) {
     await Zotero.uiReadyPromise;
     await ZoteroReadTracker.registerColumn();
     Zotero.ResearchActivity = ResearchActivity;
-    await ResearchActivity.init({ id, rootURI });
+    await ResearchActivity.init({ id, version, rootURI });
 
     var windows = Zotero.getMainWindows();
     for (var i = 0; i < windows.length; i++) {

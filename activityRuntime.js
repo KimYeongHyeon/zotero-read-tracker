@@ -4,9 +4,10 @@ var ResearchActivity = {
     store: null, snapshot: null, error: null, running: false,
     _saveQueue: Promise.resolve(), _refreshQueue: Promise.resolve(),
 
-    async init({ id, rootURI }) {
+    async init({ id, version, rootURI }) {
         this.id = id;
         this.rootURI = rootURI;
+        this.version = version;
         this.chromeHandle = Cc['@mozilla.org/addons/addon-manager-startup;1']
             .getService(Ci.amIAddonManagerStartup).registerChrome(
                 Services.io.newURI(rootURI + 'manifest.json'),
@@ -293,7 +294,7 @@ var ResearchActivity = {
             } catch (e) { Zotero.logError(e); }
             await this.refresh();
         }, true);
-        frame.src = 'chrome://research-activity/content/activity.html';
+        frame.src = 'chrome://research-activity/content/activity.html?v=' + encodeURIComponent(this.version);
         container.appendChild(frame);
         return id;
     },
