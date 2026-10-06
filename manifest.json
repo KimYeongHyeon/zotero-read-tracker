@@ -1,15 +1,15 @@
 {
   "manifest_version": 2,
-  "name": "Zotero Read Tracker",
-  "version": "0.1.0",
-  "description": "Keep track of which papers you've read in Zotero",
-  "homepage_url": "https://github.com/marysethomas/zotero-read-tracker",
+  "name": "Zotero Research Activity",
+  "version": "0.2.1",
+  "description": "Your research activity: reading, notes, saved papers, and a yearly activity calendar",
+  "homepage_url": "https://github.com/KimYeongHyeon/zotero-read-tracker",
   "applications": {
     "zotero": {
-      "id": "zotero-read-tracker@github.com",
-      "update_url": "https://github.com/marysethomas/zotero-read-tracker/releases",
-      "strict_min_version": "7.0",
-      "strict_max_version": "9.0.*"
+      "id": "research-activity@kimyeonghyeon",
+      "strict_min_version": "10.0.5",
+      "strict_max_version": "10.0.*",
+      "update_url": "https://github.com/KimYeongHyeon/zotero-read-tracker/releases/latest/download/updates.json"
     }
   }
 }

@@ -1,0 +1,145 @@
+{
+  "host": {
+    "zotero": "10.0.5",
+    "tabSingleton": true,
+    "trashExcluded": true,
+    "restoreCount": 7,
+    "selectedPaperID": 1,
+    "annotationKey": "SALXWAMK",
+    "readerCount": 1,
+    "readRecords": 1,
+    "backgroundNoIncrease": true,
+    "reading": {
+      "1/B49K3MRV": {
+        "2026-10-06": 119.70200000000001
+      }
+    },
+    "extraPreserved": true,
+    "records": [
+      {
+        "id": "note:1/5JETWI6Z",
+        "key": "1/5JETWI6Z",
+        "parentKey": "1/B49K3MRV",
+        "type": "note",
+        "subtype": "note",
+        "title": "Observed QA note updated",
+        "date": "2026-10-06",
+        "source": "observed"
+      },
+      {
+        "id": "save:1/B49K3MRV",
+        "key": "1/B49K3MRV",
+        "parentKey": "1/B49K3MRV",
+        "type": "save",
+        "subtype": null,
+        "title": "Activity QA — PDF reading",
+        "date": "2026-01-01",
+        "source": "restored"
+      },
+      {
+        "id": "save:1/D4ITH3XP",
+        "key": "1/D4ITH3XP",
+        "parentKey": "1/D4ITH3XP",
+        "type": "save",
+        "subtype": null,
+        "title": "Observed QA saved paper",
+        "date": "2026-10-06",
+        "source": "observed"
+      },
+      {
+        "id": "note:1/SALXWAMK",
+        "key": "1/SALXWAMK",
+        "parentKey": "1/B49K3MRV",
+        "type": "note",
+        "subtype": "annotation",
+        "title": "Observed QA annotation updated",
+        "date": "2026-10-06",
+        "source": "observed"
+      },
+      {
+        "id": "note:1/WCI43WDZ",
+        "key": "1/WCI43WDZ",
+        "parentKey": "1/B49K3MRV",
+        "type": "note",
+        "subtype": "annotation",
+        "title": "Restored annotation",
+        "date": "2026-10-06",
+        "source": "restored"
+      },
+      {
+        "id": "note:1/ZXGBI777",
+        "key": "1/ZXGBI777",
+        "parentKey": "1/B49K3MRV",
+        "type": "note",
+        "subtype": "note",
+        "title": "Original restored note.",
+        "date": "2026-01-02",
+        "source": "restored"
+      },
+      {
+        "id": "1/B49K3MRV:2026-10-06:read",
+        "key": "1/B49K3MRV",
+        "parentKey": "1/B49K3MRV",
+        "type": "read",
+        "date": "2026-10-06",
+        "seconds": 119.70200000000001,
+        "title": "Activity QA — PDF reading",
+        "source": "observed"
+      }
+    ]
+  },
+  "lifecycle": {
+    "cleanup": true,
+    "corruptFileRejected": true,
+    "corruptFilePreserved": true,
+    "recovered": true,
+    "count": 7,
+    "reading": {
+      "1/B49K3MRV": {
+        "2026-10-06": 201.41699999999986
+      }
+    }
+  },
+  "restart": {
+    "zotero": "10.0.5",
+    "storeIdentical": true,
+    "recordsIdentical": true,
+    "state": {
+      "year": 2026,
+      "collection": "1/7RNLJCIU",
+      "type": "all",
+      "month": 10,
+      "date": null
+    },
+    "count": 7,
+    "reading": {
+      "1/B49K3MRV": {
+        "2026-10-06": 169.78999999999996
+      }
+    },
+    "connected": true,
+    "sessionTabs": [
+      "library",
+      "reader"
+    ]
+  },
+  "multi-window": {
+    "elapsed": 6.003,
+    "delta": 6.020999999999958,
+    "readers": 2,
+    "readRecords": 1,
+    "focusBefore": [
+      false,
+      true
+    ],
+    "focusAfter": [
+      false,
+      true
+    ]
+  },
+  "package": {
+    "file": "ZoteroResearchActivity.xpi",
+    "sha256": "2db68e10726bdb0ee6dfbca9bb120de0acf09bf25c3824b75692ee6c10434f8d",
+    "matchesInstalledTestPackage": true
+  }
+}

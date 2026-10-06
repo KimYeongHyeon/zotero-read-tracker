@@ -1,5 +1,7 @@
 var ZoteroReadTracker;
 var ZoteroReadTrackerHeatmap;
+var ResearchActivity;
+var ResearchActivityModel;
 
 function log(msg) {
     Zotero.debug("ZoteroReadTracker: " + msg);
@@ -15,10 +17,14 @@ async function startup({ id, version, rootURI }) {
     Services.scriptloader.loadSubScript(rootURI + "readTracker.js");
     Services.scriptloader.loadSubScript(rootURI + "heatmapBuilder.js");
 
+    Services.scriptloader.loadSubScript(rootURI + "activityModel.js");
+    Services.scriptloader.loadSubScript(rootURI + "activityRuntime.js");
     ZoteroReadTracker.init({ id, version, rootURI });
 
     await Zotero.uiReadyPromise;
     await ZoteroReadTracker.registerColumn();
+    Zotero.ResearchActivity = ResearchActivity;
+    await ResearchActivity.init({ id, rootURI });
 
     var windows = Zotero.getMainWindows();
     for (var i = 0; i < windows.length; i++) {
@@ -36,7 +42,11 @@ function onMainWindowUnload({ window }) {
     ZoteroReadTracker.removeFromWindow(window);
 }
 
-function shutdown() {
+async function shutdown() {
+    if (ResearchActivity) {
+        try { await ResearchActivity.shutdown(); } catch (error) { Zotero.logError(error); }
+    }
+    delete Zotero.ResearchActivity;
     log("Shutting down");
     if (ZoteroReadTracker) {
         var windows = Zotero.getMainWindows();

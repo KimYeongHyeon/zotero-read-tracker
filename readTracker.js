@@ -5,6 +5,7 @@ var ZoteroReadTracker = {
     _initialized: false,
     _addedElementIDs: [],
     _registeredColumnID: null,
+    _contextMenuListeners: new Map(),
 
     // ───────────────── Init ─────────────────
 
@@ -70,8 +71,7 @@ var ZoteroReadTracker = {
 
             if (newStatus) {
                 var now = new Date();
-                var today = now.toISOString()
-                    .split("T")[0];
+                var today = ResearchActivityModel.localDate(now);
                 var time = now.toTimeString()
                     .split(" ")[0];
                 extra += "\nRead: true\nRead-Date: "
@@ -195,45 +195,31 @@ var ZoteroReadTracker = {
     // ───────────────── Open heatmap ─────────────────
 
     /**
-     * Open the heatmap in the default browser.
+     * Open the research activity tab in Zotero.
      */
     openHeatmap: async function() {
-        try {
-            var counts = await this.getReadDateCounts();
-            var streak = this.calcStreak(counts);
-            this.log("Opening heatmap with "
-                + Object.keys(counts).length + " dates, "
-                + "streak: " + streak);
-
-            var html = ZoteroReadTrackerHeatmap.buildHTML(
-                counts, streak
-            );
-
-            var tmpFile = Zotero.getTempDirectory();
-            tmpFile.append("readtracker_heatmap.html");
-            await Zotero.File.putContentsAsync(
-                tmpFile, html
-            );
-
-            var fileURI =
-                Services.io.newFileURI(tmpFile).spec;
-            this.log("Heatmap URI: " + fileURI);
-            Zotero.launchURL(fileURI);
-        } catch (e) {
-            this.log("openHeatmap error: " + e);
-        }
+        await ResearchActivity.open();
     },
 
     // ───────────────── Per-window UI ─────────────────
 
     addToWindow: function(window) {
         this.log("addToWindow");
+        ResearchActivity.addWindow(window);
         this._addContextMenu(window);
         this._addToolsMenu(window);
     },
 
     removeFromWindow: function(window) {
         this.log("removeFromWindow");
+        ResearchActivity.removeWindow(window);
+        var contextMenu = this._contextMenuListeners.get(window);
+        if (contextMenu) {
+            contextMenu.menu.removeEventListener(
+                "popupshowing", contextMenu.listener
+            );
+            this._contextMenuListeners.delete(window);
+        }
         var doc = window.document;
         for (var i = 0;
              i < this._addedElementIDs.length; i++) {
@@ -242,7 +228,7 @@ var ZoteroReadTracker = {
             );
             if (el) el.remove();
         }
-        this._addedElementIDs = [];
+        // IDs are shared by all main windows; retain them until plugin shutdown.
     },
 
     // ───────────────── Context menu ─────────────────
@@ -265,26 +251,30 @@ var ZoteroReadTracker = {
 
         var self = this;
 
-        menu.addEventListener("popupshowing",
-            function() {
-                try {
-                    var zoteroPane =
-                        Zotero.getActiveZoteroPane();
-                    var items =
-                        zoteroPane.getSelectedItems();
-                    if (items && items.length === 1
-                        && items[0].isRegularItem()) {
-                        menuItem.setAttribute("checked",
-                            self.getReadStatus(items[0])
-                                .toString()
-                        );
-                    }
-                } catch (e) {
-                    self.log(
-                        "popupshowing error: " + e
+        var popupshowing = function() {
+            try {
+                var zoteroPane =
+                    Zotero.getActiveZoteroPane();
+                var items =
+                    zoteroPane.getSelectedItems();
+                if (items && items.length === 1
+                    && items[0].isRegularItem()) {
+                    menuItem.setAttribute("checked",
+                        self.getReadStatus(items[0])
+                            .toString()
                     );
                 }
-            });
+            } catch (e) {
+                self.log(
+                    "popupshowing error: " + e
+                );
+            }
+        };
+        menu.addEventListener("popupshowing", popupshowing);
+        this._contextMenuListeners.set(window, {
+            menu: menu,
+            listener: popupshowing
+        });
 
         menuItem.addEventListener("command",
             async function() {
@@ -333,7 +323,7 @@ var ZoteroReadTracker = {
         var menuItem = doc.createXULElement("menuitem");
         menuItem.id = menuID;
         menuItem.setAttribute("label",
-            "Plot Reading Heatmap");
+            "Research Activity");
 
         var self = this;
         menuItem.addEventListener("command",
